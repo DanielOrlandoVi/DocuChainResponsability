@@ -1,29 +1,25 @@
-package Manejos_concretos;
-/**
- *
- * @author jorge malaver
- */
-import Interfaces.Manejo_principal;
+package Manejos_concretos;  // Define el paquete del código
+/*
+  @author jorge malaver
+*/ 
+import Interfaces.Manejo_principal;  // Importa la interfaz Manejo_principal
+import javax.swing.JOptionPane;     // Importa la clase JOptionPane para mostrar cuadros de diálogo
 
-public class Contabilidad implements Manejo_principal{
-    private  final int TipoD = 1;//el atributo contiene el identificador si la
-    //peticion debe ser respondida por este dpto
-    private Manejo_principal suceso;//parametor del sucesor en la cadena de responsabilidad
+public class Contabilidad implements Manejo_principal{  // La clase Contabilidad implementa la interfaz Manejo_principal
+    private  final int TipoD = 1;  // Define una constante para el tipo de departamento
+    private Manejo_principal suceso;  // Declara una variable de la interfaz Manejo_principal
     
-    public Contabilidad(Manejo_principal s){// objeto que implemena la inteface
-        this.suceso =s;// al atributo de la asigna la interface
+    public Contabilidad(Manejo_principal s){  // Constructor de la clase que recibe un objeto de la interfaz Manejo_principal
+        this.suceso =s;  // Asigna el objeto recibido a la variable suceso
     }
         
     @Override
-    public void getManejo(int Tipo_Dpto){       //Llama al objeto de la interfaz y observa si le toca la responsabilidad
-        if(Tipo_Dpto==TipoD) {
-            System.out.println(".......EL PEDIDO DEBE SER CONTESTADO POR CONTABILIDAD.....");
-            //si es la responsabilidad
-            //Imprime la linea
+    public void getManejo(int Tipo_Dpto){  // Método que implementa la interfaz Manejo_principal
+        if(Tipo_Dpto==TipoD) {  // Si el tipo de departamento coincide con la constante definida
+            JOptionPane.showMessageDialog(null, ".......EL PEDIDO DEBE SER CONTESTADO POR CONTABILIDAD.....");  // Muestra un mensaje indicando que el pedido debe ser contestado por contabilidad
         }  
         else{
-            suceso.getManejo(Tipo_Dpto);//llama el metodo del sucesor enviando el valor que ha 
-            //solicitado el cliente
+            suceso.getManejo(Tipo_Dpto);  // Si no es la responsabilidad de este objeto, pasa la solicitud al siguiente objeto en la cadena de responsabilidad
         }
     }
 }

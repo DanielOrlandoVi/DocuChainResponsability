@@ -1,43 +1,53 @@
-package practica_cadenaresponsabilidad;     //Clase del cliente
-/**
- *
- * @author jorge malaver
- */
-import Gerencia.gerencia;
-import Manejos_concretos.*;
-import java.util.Scanner;
+package practica_cadenaresponsabilidad;     // Define el paquete del código
+/*
+  @author jorge malaver
+*/
+import Gerencia.gerencia;                   // Importa la clase gerencia
+import Manejos_concretos.*;                 // Importa todas las clases del paquete Manejos_concretos
+import javax.swing.JOptionPane;             // Importa la clase JOptionPane para mostrar cuadros de diálogo
 
-public class Practica_cadenaResponsabilidad {
-        public static void main(String[] args) {
-        // TODO code application logic here
+public class Practica_cadenaResponsabilidad {   // Define la clase principal
+        public static void main(String[] args) {  // Método principal del programa
         
-        Scanner sc=new Scanner(System.in);
-        int op=0;
-        gerencia obj =new gerencia();       //Crea un objeto de gerencia
-        Personal obj1 = new Personal(obj);      //Crea un objeto de personal
-        Contabilidad obj2 =new Contabilidad(obj1);      //Crea un objeto de contabilidad
-        /* 
-            Aquí se da el proceso de cadena de responsabilidad, ya que en la primera clase
-            que es llamada se le envía el siguiente manejador por si no puede realizar
-            la acción enviada. Dentro del manejador tiene una clase condicional para realizar
-            la cadena hasta encontrar la clase que funcione.
-        */
+        int op=0;                                // Inicializa una variable para almacenar la opción del usuario
+        gerencia obj =new gerencia();            // Crea un objeto de la clase gerencia
+        Personal obj1 = new Personal(obj);       // Crea un objeto de la clase Personal y le pasa el objeto de gerencia
+        Contabilidad obj2 =new Contabilidad(obj1); // Crea un objeto de la clase Contabilidad y le pasa el objeto de Personal
         
-        do{     //Pide el op
-            System.out.println("**********************************");
-            System.out.println("* SELECCIONE LA PETICION AL DPTO *");
-            System.out.println("* 1  CONTABILIDAD                *");
-            System.out.println("* 2  PERSONAL                    *");
-            System.out.println("* 3  GERENCIA                    *");
-            System.out.println("* 0  SALIR DE LA APLICACION      *");
-            System.out.println("**********************************");
+        String opciones[] = {"CONTABILIDAD", "PERSONAL", "GERENCIA", "SALIR DE LA APLICACION"}; // Define las opciones disponibles
+        
+        while (true) {  // Bucle infinito hasta que el usuario decida salir
+
+            String opcion = (String) JOptionPane.showInputDialog(null, "Seleccione una gaseosa:", "Seleccion de gaseosa",
+                    JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);  // Muestra un cuadro de diálogo para que el usuario elija una opción
             
-            op=sc.nextInt();
-            if(op!=0){
-                obj2.getManejo(op);     //Llama a la clase getManejo de contabilidad y le manda el parámetro op
-                
+            if (opcion == null || opcion.equals("SALIR DE LA APLICACION")) {  // Si el usuario elige salir o cierra el cuadro de diálogo
+                JOptionPane.showMessageDialog(null, "Saliendo del programa...");  // Muestra un mensaje de despedida
+                break;  // Sale del bucle
             }
-            
-        } while(op!=0);
+                
+            switch (opcion) {  // Dependiendo de la opción elegida por el usuario
+                case "CONTABILIDAD":
+                    op = 1;  // Asigna el valor correspondiente a la opción
+                    obj2.getManejo(op);  // Llama al método getManejo del objeto Contabilidad
+                    break;
+                case "PERSONAL":
+                    op = 2;
+                    obj2.getManejo(op);
+                    break;
+                case "GERENCIA":
+                    op = 3;
+                    obj2.getManejo(op);
+                    break;
+                    
+                case "SALIR DE LA APLICACION":
+                    System.exit(0);  // Termina la ejecución del programa
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opcion no valida.");  // Si la opción no es válida, muestra un mensaje de error
+                    return;
+            }
+        }
     }
 }
